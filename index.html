@@ -457,6 +457,28 @@ button:focus-visible{outline:4px solid var(--berry);outline-offset:3px}
 .pbtn{padding:10px 16px;border-radius:14px;font-weight:800;font-size:.95rem}
 .pbtn.danger{background:var(--tomato);color:#fff}
 
+/* extra motorbike mini-games */
+.spr.house{z-index:0}
+.spr.mbox{z-index:1}
+.spr.hero{z-index:3}
+.spr.mbox.ready svg{filter:drop-shadow(0 0 8px #FFD23F) drop-shadow(0 0 4px #FFD23F);animation:pulse .45s ease-in-out infinite alternate}
+.spr.mbox.done svg{filter:drop-shadow(0 0 6px #5CCB6A)}
+.world.w-race{background:linear-gradient(#BDE7FF, #EAF6FF 40%)}
+.track{position:absolute;left:0;right:0;top:40%;bottom:0;background:#6B6585;border-top:5px solid var(--ink)}
+.track::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:repeating-linear-gradient(90deg, #E8434A 0 20px, #fff 20px 40px)}
+.track .lane-line{position:absolute;left:0;right:0;top:46%;height:6px;background:repeating-linear-gradient(90deg, #fff 0 30px, transparent 30px 60px)}
+.finish{position:absolute;left:0;top:40%;bottom:0;width:24px;background:conic-gradient(#fff 25%, #2E2A47 0 50%, #fff 0 75%, #2E2A47 0) 0 0/24px 24px;border-left:3px solid var(--ink);border-right:3px solid var(--ink)}
+.world.w-deliver{background:linear-gradient(#FFE1B8, #E3F3FF 60%)}
+.street{position:absolute;left:0;right:0;bottom:0;height:13%;border-top:5px solid var(--ink);background-color:#6B6585;background-image:repeating-linear-gradient(90deg, #fff 0 40px, transparent 40px 80px);background-size:100% 6px;background-repeat:no-repeat;background-position:0 55%}
+.world.w-cross{background:linear-gradient(#FFD9A8, #FFF1DC 70%)}
+.ground.dirt{background-color:#C79A62;background-image:repeating-linear-gradient(90deg, #B5864F 0 20px, #C79A62 20px 40px)}
+.world.w-tunnel{background-color:#2B2450;background-image:radial-gradient(rgba(255,255,255,.1) 2px, transparent 2.5px);background-size:34px 34px}
+.cave-top,.cave-bot{position:absolute;left:0;right:0;height:10%;z-index:2;background-color:#5A4A86;background-image:radial-gradient(#7CF2C0 4px, transparent 4.5px);background-size:60px 40px}
+.cave-top{top:0;border-bottom:5px solid var(--ink)}
+.cave-bot{bottom:0;border-top:5px solid var(--ink)}
+.spr.rock{z-index:1}
+.spr.rock svg{display:block;width:100%;height:100%}
+
 /* ---------- DONE ---------- */
 #done{align-items:center;justify-content:center;text-align:center;gap:18px}
 .trophy{width:min(30vh, 52vw);aspect-ratio:1;animation:hop 1s ease infinite}
@@ -1476,6 +1498,7 @@ renderDiff();
 show('home');
 </script>
 <script src="learn.js"></script>
+<script src="minigames.js"></script>
 <script>
 if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 </script>

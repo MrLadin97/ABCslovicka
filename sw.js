@@ -1,6 +1,6 @@
 /* Offline režim: všechno se při první návštěvě uloží do zařízení, aby hra šla i bez internetu.
    Při každé změně hry zvyšte VERSION, telefony si pak stáhnou novou verzi. */
-const VERSION = 'abc-slovicka-v3';
+const VERSION = 'abc-slovicka-v4';
 const FILES = [
 "./",
 "index.html",
@@ -8,6 +8,7 @@ const FILES = [
 "pics.js",
 "cards.js",
 "learn.js",
+"minigames.js",
 "icons/icon-192.png",
 "icons/icon-512.png",
 "icons/apple-touch-icon.png",
