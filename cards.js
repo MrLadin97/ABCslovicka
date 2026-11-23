@@ -169,7 +169,7 @@ const CARDS = [
     R(18, 92, 24, 8, 3, INK) + R(26, 98, 6, 12, 2, INK) +
     P('M92,88 Q98,84 110,84 L118,84 L120,100 L88,100Z', '#BDE7FF', 'stroke-width="3.5"') +
     C(110, 76, 12, '#FFD23F') + P('M100,74 L120,74', 'none', 'stroke-width="3"') +
-    C(150, 118, 16, '#fff', 'stroke-width="3.5"') + `<text x="150" y="126" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="22" fill="${INK}" stroke="none">1</text>` +
+    C(150, 118, 16, '#fff', 'stroke-width="3.5"') + `<text x="150" y="126" text-anchor="middle" font-family="'Baloo 2', sans-serif" font-weight="700" font-size="22" fill="${INK}" stroke="none">1</text>` +
     P('M36,124 L130,124', 'none', 'stroke="url(#gGold)" stroke-width="8"') +
     wheel(52, 140, 20) + wheel(160, 140, 20) + sparkle(70, 40, .8, '#fff') + sparkle(30, 70, .5, '#fff') },
 ];

@@ -64,6 +64,7 @@ $('#again').onclick = () => (MODES[lastMode] || startQuiz)();
 $('#go-quiz').addEventListener('click', () => { lastMode = 'quiz'; });
 // fit a set of square tiles into the space left on screen
 function fitTiles(box, n, gap = 12){
+  box.style.maxWidth = '';
   const h = box.clientHeight || innerHeight - 220, w = box.clientWidth || innerWidth - 32;
   let best = { size: 0, cols: 1 };
   for (let cols = 1; cols <= n; cols++){
@@ -81,10 +82,25 @@ function fitTiles(box, n, gap = 12){
    PEXESO
    ===================================================================== */
 const pex = { cards: [], open: [], lock: false, found: 0, moves: 0, pairs: 0 };
+// level → number of pairs; every count fills a complete grid
+const PEX_PAIRS = { 2: 4, 3: 6, 4: 8, 5: 10 };            // 8, 12, 16, 20 cards
+const PEX_GRIDS = { 8: [[4, 2], [2, 4]], 12: [[4, 3], [3, 4], [6, 2]], 16: [[4, 4], [8, 2]], 20: [[5, 4], [4, 5]] };
+function layoutPex(){
+  const box = $('#pex-grid'), n = pex.cards.length, gap = 10;
+  const sec = $('#pexeso');
+  const W = sec.clientWidth, H = sec.clientHeight;
+  let best = null;
+  for (const [cols, rows] of PEX_GRIDS[n] || [[Math.ceil(Math.sqrt(n)), Math.ceil(n / Math.ceil(Math.sqrt(n)))]]){
+    const size = Math.floor(Math.min((W - (cols - 1) * gap) / cols, (H - (rows - 1) * gap) / rows));
+    if (!best || size > best.size) best = { cols, rows, size };
+  }
+  box.style.gridTemplateColumns = `repeat(${best.cols}, ${Math.max(44, best.size)}px)`;
+  box.style.setProperty('--size', Math.max(44, best.size) + 'px');
+}
 function startPexeso(){
   lastMode = 'pexeso'; quiz.token++;
-  pex.pairs = { 2: 3, 3: 4, 4: 6, 5: 8 }[state.n];
-  const words = pickWeighted(poolOr(pool(), pex.pairs), pex.pairs);
+  const want = PEX_PAIRS[state.n];
+  const words = pickWeighted(poolOr(pool(), want), want);
   pex.pairs = words.length;
   pex.cards = shuffle(words.concat(words).map((w, i) => ({ w, id: i })));
   pex.open = []; pex.lock = false; pex.found = 0; pex.moves = 0; pex.got = 0;
@@ -98,7 +114,8 @@ function startPexeso(){
     b.onclick = () => flipPex(b, c);
     c.el = b; box.appendChild(b);
   });
-  requestAnimationFrame(() => fitTiles(box, pex.cards.length, 12));
+  layoutPex();
+  requestAnimationFrame(layoutPex);
 }
 async function flipPex(b, c){
   if (pex.lock || c.done || pex.open.includes(c)) return;
@@ -115,13 +132,14 @@ async function flipPex(b, c){
     pex.found++; pex.open = []; pex.lock = false;
     if (pex.found === pex.pairs){ await wait(900); if (t === quiz.token) finishLesson('pexeso', pex.got, pex.pairs, pex.moves - pex.pairs); }
   } else {
-    await wait(1300); if (t !== quiz.token) return;
+    await wait(1450); if (t !== quiz.token) return;      // 1 s to look after the card has finished turning (0.45 s)
     a.el.classList.remove('up'); d.el.classList.remove('up');
+    await wait(450); if (t !== quiz.token) return;       // wait until they are face down again
     pex.open = []; pex.lock = false;
   }
 }
 MODES.pexeso = startPexeso;
-addEventListener('resize', () => { if (screen === 'pexeso') fitTiles($('#pex-grid'), pex.cards.length, 12); });
+addEventListener('resize', () => { if (screen === 'pexeso') layoutPex(); });
 
 /* =====================================================================
    DEJ OPIČCE – "Give me the apple, please!"

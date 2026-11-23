@@ -333,7 +333,7 @@ const O = {
   },
   number(n){
     const cols = ['#FF5A4E', '#FFA63D', '#FFD23F', '#5CCB6A', '#4DA3FF', '#8C6CF0', '#FF7AB8', '#2FB3A8', '#C58A55', '#FF8A65'];
-    let s = `<text x="100" y="86" text-anchor="middle" font-family="Fredoka, 'Arial Rounded MT Bold', sans-serif" font-weight="700" font-size="78" fill="${cols[n - 1]}" stroke-width="5" paint-order="stroke">${n}</text>`;
+    let s = `<text x="100" y="86" text-anchor="middle" font-family="'Baloo 2', 'Arial Rounded MT Bold', sans-serif" font-weight="700" font-size="78" fill="${cols[n - 1]}" stroke-width="5" paint-order="stroke">${n}</text>`;
     const rows = n <= 5 ? [n] : [5, n - 5];
     rows.forEach((cnt, ri) => {
       const y = rows.length === 1 ? 140 : 124 + ri * 36;
@@ -405,7 +405,7 @@ const PICS = {
   'stop': O.stop,
   'choose': () => G('translate(8 92) scale(.48)', O.apple()) + G('translate(96 92) scale(.48)', O.banana()) +
      G('translate(60 128) scale(.8) translate(-106 -164) rotate(90 100 100)', pointHand('#8C6CF0')) +
-     `<text x="160" y="56" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="46" fill="#FF3D8B" stroke-width="4" paint-order="stroke">?</text>`,
+     `<text x="160" y="56" text-anchor="middle" font-family="'Baloo 2', sans-serif" font-weight="700" font-size="46" fill="#FF3D8B" stroke-width="4" paint-order="stroke">?</text>`,
   'stand up': () => G('translate(-14 0)', kid({ shirt: '#FF8A65', pants: '#3F4C9A', pose: 'up' })) + G('translate(64 0) scale(.75) translate(30 30)', arrow(100, 100, 1, '#5CCB6A')),
   'sit down': () => R(56, 70, 88, 16, 6, '#B5713F') + R(60, 84, 12, 60, 4, '#B5713F') + R(128, 84, 12, 60, 4, '#B5713F') +
      R(48, 130, 104, 16, 6, '#C98B55') + R(54, 146, 10, 40, 4, '#B5713F') + R(136, 146, 10, 40, 4, '#B5713F') +
