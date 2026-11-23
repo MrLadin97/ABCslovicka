@@ -1,6 +1,6 @@
 /* Offline režim: všechno se při první návštěvě uloží do zařízení, aby hra šla i bez internetu.
    Při každé změně hry zvyšte VERSION, telefony si pak stáhnou novou verzi. */
-const VERSION = 'abc-slovicka-v2';
+const VERSION = 'abc-slovicka-v3';
 const FILES = [
 "./",
 "index.html",

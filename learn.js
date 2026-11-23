@@ -85,15 +85,36 @@ const pex = { cards: [], open: [], lock: false, found: 0, moves: 0, pairs: 0 };
 // level → number of pairs; every count fills a complete grid
 const PEX_PAIRS = { 2: 4, 3: 6, 4: 8, 5: 10 };            // 8, 12, 16, 20 cards
 const PEX_GRIDS = { 8: [[4, 2], [2, 4]], 12: [[4, 3], [3, 4], [6, 2]], 16: [[4, 4], [8, 2]], 20: [[5, 4], [4, 5]] };
-function layoutPex(){
-  const box = $('#pex-grid'), n = pex.cards.length, gap = 10;
+function pexGrid(n, gap = 10){
   const sec = $('#pexeso');
-  const W = sec.clientWidth, H = sec.clientHeight;
+  const W = sec.clientWidth || innerWidth - 32, H = sec.clientHeight || innerHeight - 120;
   let best = null;
   for (const [cols, rows] of PEX_GRIDS[n] || [[Math.ceil(Math.sqrt(n)), Math.ceil(n / Math.ceil(Math.sqrt(n)))]]){
     const size = Math.floor(Math.min((W - (cols - 1) * gap) / cols, (H - (rows - 1) * gap) / rows));
     if (!best || size > best.size) best = { cols, rows, size };
   }
+  return best;
+}
+// shuffle so that no two cards of a pair touch (not even corner to corner)
+function spreadPairs(list, cols){
+  const touching = a => {
+    let bad = 0;
+    for (let i = 0; i < a.length; i++) for (let j = i + 1; j < a.length; j++){
+      if (a[i].w.en !== a[j].w.en) continue;
+      const dr = Math.abs(Math.floor(i / cols) - Math.floor(j / cols)), dc = Math.abs(i % cols - j % cols);
+      if (dr <= 1 && dc <= 1) bad++;
+    }
+    return bad;
+  };
+  let best = shuffle(list), score = touching(best);
+  for (let k = 0; k < 400 && score > 0; k++){
+    const cand = shuffle(list), sc = touching(cand);
+    if (sc < score){ best = cand; score = sc; }
+  }
+  return best;
+}
+function layoutPex(){
+  const box = $('#pex-grid'), best = pexGrid(pex.cards.length);
   box.style.gridTemplateColumns = `repeat(${best.cols}, ${Math.max(44, best.size)}px)`;
   box.style.setProperty('--size', Math.max(44, best.size) + 'px');
 }
@@ -102,9 +123,10 @@ function startPexeso(){
   const want = PEX_PAIRS[state.n];
   const words = pickWeighted(poolOr(pool(), want), want);
   pex.pairs = words.length;
-  pex.cards = shuffle(words.concat(words).map((w, i) => ({ w, id: i })));
-  pex.open = []; pex.lock = false; pex.found = 0; pex.moves = 0; pex.got = 0;
   show('pexeso');
+  const all = words.concat(words).map((w, i) => ({ w, id: i }));
+  pex.cards = spreadPairs(all, pexGrid(all.length).cols);
+  pex.open = []; pex.lock = false; pex.found = 0; pex.moves = 0; pex.got = 0;
   const box = $('#pex-grid'); box.innerHTML = '';
   pex.cards.forEach(c => {
     const b = document.createElement('button');
