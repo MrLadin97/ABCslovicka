@@ -166,8 +166,8 @@ addEventListener('resize', () => { if (screen === 'pexeso') layoutPex(); });
 /* =====================================================================
    DEJ OPIČCE – "Give me the apple, please!"
    ===================================================================== */
-const NOUNS = ['teddy bear', 'rainbow', 'ball', 'apple', 'banana', 'potato', 'car', 'pencil', 'horse', 'cow', 'sheep', 'pig', 'duck', 'dog', 'cat', 'hen'];
-const FOOD = ['apple', 'banana', 'potato'];
+const NOUNS = ['teddy bear', 'rainbow', 'ball', 'apple', 'banana', 'potato', 'car', 'pencil', 'horse', 'cow', 'sheep', 'pig', 'duck', 'dog', 'cat', 'hen', 'frog', 'pancake'];
+const FOOD = ['apple', 'banana', 'potato', 'pancake'];
 const feed = { list: [], i: 0, results: [], missed: false, busy: false, wrong: 0 };
 const feedPool = () => { const all = ALL.filter(w => NOUNS.includes(w.en)); const p = pool().filter(w => NOUNS.includes(w.en)); return p.length >= 4 ? p : all; };
 const askKey = w => `Give me the ${w.en}, please!`;
@@ -263,7 +263,7 @@ MODES.feed = startFeed;
 /* =====================================================================
    BALÓNKY – "Pop three red balloons!" (barvy + počítání)
    ===================================================================== */
-const COLOURS = { red: '#F0453F', blue: '#3F8EF0', green: '#3DBE5A', yellow: '#FFD62E', orange: '#FF9426', purple: '#9B5CE8', black: '#3A3550', white: '#FFFFFF', brown: '#9A5B33' };
+const COLOURS = { red: '#F0453F', blue: '#3F8EF0', green: '#3DBE5A', yellow: '#FFD62E', orange: '#FF9426', purple: '#9B5CE8', pink: '#FF8FC8', black: '#3A3550', white: '#FFFFFF', brown: '#9A5B33' };
 const NUMW = ['one', 'two', 'three', 'four', 'five'];
 const bal = { rounds: 6, i: 0, results: [], missed: false, busy: false, wrong: 0 };
 const balKey = (num, col) => `Pop ${NUMW[num - 1]} ${col} balloon${num > 1 ? 's' : ''}!`;
@@ -351,7 +351,8 @@ MODES.balloons = startBalloons;
    SIMON SAYS – "Simon says: touch your nose!" → do it → tap what you did
    ===================================================================== */
 const SIMON = [
-  ...['head', 'face', 'eyes', 'ears', 'nose', 'mouth', 'arm', 'leg', 'shoulders', 'knee', 'toes', 'foot'].map(en => ({ en, key: `Simon says: touch your ${en}!` })),
+  ...['head', 'face', 'eyes', 'ears', 'nose', 'mouth', 'arm', 'leg', 'shoulders', 'knee', 'toes', 'foot', 'chin'].map(en => ({ en, key: `Simon says: touch your ${en}!` })),
+  ...['tongue', 'teeth', 'finger'].map(en => ({ en, key: `Simon says: show me your ${en}!` })),
   ...['stand up', 'sit down', 'turn around', 'be quiet', 'shout', 'smile'].map(en => ({ en, key: `Simon says: ${en}!` })),
 ];
 const sim = { list: [], i: 0, results: [], missed: false, busy: false, wrong: 0 };

@@ -88,7 +88,8 @@ button:focus-visible{outline:4px solid var(--berry);outline-offset:3px}
 .screen{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px}
 
 /* ---------- HOME ---------- */
-#home{justify-content:center;align-items:center;gap:22px;overflow-y:auto;padding-bottom:8px}
+#home{justify-content:flex-start;align-items:center;gap:22px;overflow-y:auto;padding-bottom:8px}
+#home>:first-child{margin-top:auto}#home>:last-child{margin-bottom:auto}
 .logo{
   margin:0;font-family:var(--display);font-weight:700;text-align:center;
   font-size:clamp(2rem, 7vw, 3.4rem);line-height:1;letter-spacing:.01em;text-wrap:balance;
@@ -719,9 +720,17 @@ const CATEGORIES = [
     ['school','škola'], ['friend','kamarád'], ['be quiet','buď potichu'], ['shout','křič'],
     ['stand up','vstaň'], ['sit down','sedni si'], ['clean up','ukliď'], ['tidy','uklizeno'],
   ]},
+  { id:'l6', name:'Lekce 6', en:'Lesson six', icon:'sun', color:'#FFC24D', words:[
+    ['happy','veselý'], ['sad','smutný'], ['tired','unavený'], ['hungry','hladový'],
+    ['sun','slunce'], ['winter','zima'], ['autumn','podzim'],
+    ['body','tělo'], ['head','hlava'], ['chin','brada'], ['tongue','jazyk'], ['teeth','zuby'], ['finger','prst'], ['foot','chodidlo'],
+    ['baby brother','bráška'], ['baby sister','sestřička'],
+    ['frog','žába'], ['pancake','palačinka'], ['pink','růžová'],
+    ['green like a frog','zelená jako žába'], ['pink like a pig','růžová jako prasátko'], ['yellow like the sun','žlutá jako slunce'],
+  ]},
   { id:'colours', name:'Barvy', en:'Colours', icon:'blue', color:'#B9A6FF', words:[
     ['red','červená'], ['blue','modrá'], ['green','zelená'], ['yellow','žlutá'],
-    ['orange','oranžová'], ['purple','fialová'], ['black','černá'], ['white','bílá'], ['brown','hnědá'],
+    ['orange','oranžová'], ['purple','fialová'], ['pink','růžová'], ['black','černá'], ['white','bílá'], ['brown','hnědá'],
   ]},
   { id:'numbers', name:'Čísla', en:'Numbers', icon:'three', color:'#FF8A7A', words:[
     ['one','jedna'], ['two','dva'], ['three','tři'], ['four','čtyři'], ['five','pět'],

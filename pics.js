@@ -91,7 +91,8 @@ function bigFace(o = {}){
   if (o.hl === 'ears') s += ring(36, 112, 21, 23) + ring(164, 112, 21, 23);
   if (o.hl === 'eyes') s += ring(100, 102, 44, 20);
   if (o.hl === 'nose') s += ring(100, 122, 17, 15);
-  if (o.hl === 'mouth') s += ring(100, 146, 30, 17);
+  if (o.hl === 'mouth') s += ring(100, 150, 32, 24);
+  if (o.hl === 'chin') s += ring(100, 170, 30, 14);
   s += o.eyes || (eye(80, 102, 1.4) + eye(120, 102, 1.4));
   s += E(100, 122, 7, 5, SKIN2);
   s += cheeks(68, 132, 130, 9);
@@ -475,6 +476,34 @@ const PICS = {
   'clean up': O.broom,
   'tidy': O.toybox,
   // barvy
+  // lekce 6
+  'sun': () => sunPic(),
+  'hungry': () => C(84, 112, 58, '#FFD866') +
+      P('M58,96 Q68,86 78,96', 'none') + P('M90,96 Q100,86 110,96', 'none') +
+      P('M62,124 Q84,148 106,124Z', '#D2405A', 'stroke-width="4.5"') + E(98, 136, 11, 8, '#FF8FA3', 'stroke-width="3.5"') +
+      P('M66,132 Q62,146 66,152 Q72,146 66,132Z', '#6EC3FF', 'stroke-width="3"') + cheeks(52, 116, 118, 7) +
+      C(146, 66, 6, '#fff', 'stroke-width="3.5"') + C(158, 48, 9, '#fff', 'stroke-width="3.5"') +
+      E(160, 30, 38, 26, '#fff', 'stroke-width="4"') + G('translate(160 30) scale(.32) translate(-100 -110)', O.apple(), 'stroke-width="12"'),
+  'winter': () => snowman(),
+  'autumn': () => R(90, 110, 20, 74, 6, '#9A5B33') + P('M100,140 L78,120 M100,130 L122,112', 'none', 'stroke="#9A5B33" stroke-width="8"') +
+      C(70, 92, 32, '#FF9426') + C(130, 92, 32, '#E8504A') + C(100, 64, 38, '#FFB443') + C(100, 104, 26, '#FF7A3D', NS) +
+      leaf(36, 160, '#E8504A', -30) + leaf(160, 150, '#FFB443', 40) + leaf(150, 186, '#FF9426', 10) + leaf(46, 128, '#FFB443', 20) +
+      E(100, 186, 70, 6, '#000', NS + ' opacity=".08"'),
+  'body': () => ring(100, 98, 60, 90) + kid({ shirt: '#FF8A65', pants: '#3F4C9A', pose: 'up' }),
+  'chin': () => bigFace({ hl: 'chin' }),
+  'tongue': () => bigFace({ hl: 'mouth', mouth: P('M80,138 Q100,158 120,138Z', '#B53450', 'stroke-width="4.5"') + P('M88,146 Q86,174 100,176 Q114,174 112,146Z', '#FF7A93', 'stroke-width="4"') + P('M100,152 L100,166', 'none', 'stroke-width="3" stroke-opacity=".5"') }),
+  'teeth': () => bigFace({ hl: 'mouth', mouth: P('M76,136 Q100,166 124,136Z', '#B53450', 'stroke-width="4.5"') + P('M79,138 L121,138 L117,148 L83,148Z', '#fff', 'stroke-width="3"') + P('M90,138 L90,148 M100,138 L100,149 M110,138 L110,148', 'none', 'stroke-width="2.5"') }),
+  'finger': () => fingerUp(),
+  'baby brother': () => babyPic('#BDE7FF', P('M48,84 Q50,30 100,30 Q150,30 152,84 Q126,60 100,62 Q74,60 48,84Z', '#4DA3FF') + C(100, 26, 10, '#FFD23F')),
+  'baby sister': () => babyPic('#FFD0E0', P('M100,40 Q90,26 102,22 Q114,26 106,34', 'none', 'stroke="#C98B55" stroke-width="5"') +
+      P('M100,44 L74,30 L76,58Z', '#FF5A9E', 'stroke-width="4"') + P('M100,44 L126,30 L124,58Z', '#FF5A9E', 'stroke-width="4"') + C(100, 44, 8, '#FF5A9E')),
+  'frog': () => frog(),
+  'pink': () => O.splat('#FF8FC8'),
+  'pancake': () => pancakes(),
+  'green like a frog': () => likePic(O.splat('#3DBE5A'), frog()),
+  'pink like a pig': () => likePic(O.splat('#FF8FC8'), A.pig()),
+  'yellow like the sun': () => likePic(O.splat('#FFD62E'), sunPic()),
+
   'red': () => O.splat('#F0453F'), 'blue': () => O.splat('#3F8EF0'), 'green': () => O.splat('#3DBE5A'),
   'yellow': () => O.splat('#FFD62E'), 'orange': () => O.splat('#FF9426'), 'purple': () => O.splat('#9B5CE8'),
   'black': () => O.splat('#2E2A47'), 'white': () => O.splat('#FFFFFF'), 'brown': () => O.splat('#9A5B33'),
@@ -508,6 +537,58 @@ const PICS = {
 };
 
 // big × small: always both stars, the arrow points at the one being asked for
+/* ---------- lekce 6 ---------- */
+function sunPic(){
+  let s = '';
+  for (let i = 0; i < 10; i++){
+    const a = i / 10 * Math.PI * 2, x1 = 100 + 56 * Math.cos(a), y1 = 100 + 56 * Math.sin(a), x2 = 100 + 84 * Math.cos(a), y2 = 100 + 84 * Math.sin(a);
+    s += P(`M${x1.toFixed(1)},${y1.toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)}`, 'none', 'stroke-width="17"') + P(`M${x1.toFixed(1)},${y1.toFixed(1)} L${x2.toFixed(1)},${y2.toFixed(1)}`, 'none', 'stroke="#FFB443" stroke-width="9"');
+  }
+  return s + C(100, 100, 48, '#FFD23F') + eye(84, 94, 1.1) + eye(116, 94, 1.1) + smile(100, 110, 12) + cheeks(74, 126, 112, 7);
+}
+function leaf(x, y, col, rot){
+  return G(`translate(${x} ${y}) rotate(${rot})`, P('M0,-14 Q12,-4 0,14 Q-12,-4 0,-14Z', col, 'stroke-width="3.5"') + P('M0,-10 L0,12', 'none', 'stroke-width="2.5"'));
+}
+function snowman(){
+  const flake = (x, y, s) => G(`translate(${x} ${y}) scale(${s})`, P('M0,-10 L0,10 M-9,-5 L9,5 M-9,5 L9,-5', 'none', 'stroke="#6EC3FF" stroke-width="4"'));
+  return E(100, 186, 70, 7, '#DDF1FF', 'stroke-width="4"') +
+    C(100, 146, 40, '#fff') + C(100, 84, 30, '#fff') +
+    P('M74,106 Q100,118 126,106 L128,116 Q100,128 72,116Z', '#E8434A', 'stroke-width="4"') + P('M112,114 L118,144 L130,140 L122,112Z', '#E8434A', 'stroke-width="4"') +
+    R(76, 52, 48, 8, 3, '#2E2A47') + R(84, 24, 32, 32, 4, '#2E2A47') + R(84, 44, 32, 6, 1, '#4DA3FF', NS) +
+    eye(90, 80) + eye(110, 80) + P('M100,88 L122,94 L100,96Z', '#FF9426', 'stroke-width="3.5"') +
+    C(100, 138, 4, INK, NS) + C(100, 156, 4, INK, NS) +
+    limb('M68,138 L38,116', '#9A5B33', 5) + limb('M132,138 L162,114', '#9A5B33', 5) +
+    flake(30, 40, 1) + flake(170, 50, .8) + flake(150, 170, .7) + flake(36, 170, .7) + flake(60, 20, .6);
+}
+function fingerUp(){
+  return ring(136, 94, 36, 24) + G('translate(0 10)', pointHand('#8C6CF0'));
+}
+function babyPic(blanket, hair){
+  return P('M24,204 Q28,146 100,140 Q172,146 176,204Z', blanket) + C(66, 172, 5, '#fff', NS) + C(132, 180, 5, '#fff', NS) + C(100, 190, 5, '#fff', NS) +
+    C(50, 92, 11, SKIN) + C(150, 92, 11, SKIN) + C(100, 90, 52, SKIN) + hair +
+    eye(80, 88, 1.1) + eye(120, 88, 1.1) + cheeks(70, 130, 106, 9) +
+    E(100, 120, 18, 8, '#FF8FA3') + C(100, 120, 7, '#FFD23F') + C(100, 134, 8, 'none', 'stroke="#FF8FA3" stroke-width="5"');
+}
+function frog(){
+  return E(100, 172, 76, 7, '#000', NS + ' opacity=".08"') +
+    E(50, 160, 30, 14, '#3DBE5A') + E(150, 160, 30, 14, '#3DBE5A') +
+    E(100, 124, 66, 50, '#5CCB6A') + E(100, 140, 40, 26, '#B8EE9C', NS) +
+    C(68, 76, 22, '#5CCB6A') + C(132, 76, 22, '#5CCB6A') + C(68, 76, 13, '#fff') + C(132, 76, 13, '#fff') + eye(70, 78) + eye(130, 78) +
+    P('M64,112 Q100,140 136,112', 'none', 'stroke-width="5"') + cheeks(56, 144, 110, 8) +
+    E(70, 168, 14, 8, '#5CCB6A') + E(130, 168, 14, 8, '#5CCB6A');
+}
+function pancakes(){
+  let s = E(100, 166, 84, 22, '#fff') + E(100, 162, 62, 13, '#EEF3FF', NS);
+  [150, 132, 114, 96].forEach(y => s += P(`M42,${y} Q42,${y + 18} 100,${y + 18} Q158,${y + 18} 158,${y} Q158,${y - 16} 100,${y - 16} Q42,${y - 16} 42,${y}Z`, '#F3B25C') + P(`M48,${y + 2} Q100,${y + 12} 152,${y + 2}`, 'none', 'stroke="#D58A33" stroke-width="3"'));
+  s += P('M52,90 Q60,72 100,74 Q140,72 150,90 Q152,104 144,108 Q138,118 132,104 Q118,96 100,100 Q86,98 74,108 Q66,120 62,104 Q50,100 52,90Z', '#9A4A1E', 'stroke-width="4"');
+  s += R(88, 70, 26, 16, 5, '#FFE27A') + E(84, 82, 5, 3, '#fff', NS + ' opacity=".6"');
+  return s + sparkle(168, 46, .7) + sparkle(30, 60, .5);
+}
+function likePic(splat, pic){
+  return G('translate(150 150) scale(.5) translate(-100 -104)', splat, 'stroke-width="10"') +
+    G('translate(76 78) scale(.68) translate(-100 -104)', pic, 'stroke-width="7.4"') +
+    P('M112,132 Q118,118 128,116', 'none', 'stroke="#FF3D8B" stroke-width="5"') + P('M118,110 L130,115 L122,126', 'none', 'stroke="#FF3D8B" stroke-width="5"');
+}
 function twoStars(which){
   const face = P(star(100, 108, 70, 32), '#FFD23F') + eye(88, 104, 1.1) + eye(112, 104, 1.1) + smile(100, 118, 9) + cheeks(80, 120, 118, 6);
   const at = (x, y, sc) => G(`translate(${x} ${y}) scale(${sc}) translate(-100 -108)`, face, `stroke-width="${(5 / sc).toFixed(1)}"`);
